@@ -3,350 +3,124 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Youth Central | Task Hub</title>
+  <title>Youth Central | Live Task Hub</title>
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --bg: #07111f;
-      --card: #0f172a;
-      --card2: #111c31;
-      --blue: #38bdf8;
-      --green: #22c55e;
-      --yellow: #f59e0b;
-      --red: #ef4444;
-      --white: #ffffff;
-      --muted: #94a3b8;
-      --line: rgba(255,255,255,0.08);
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#07111f;--card:#0f172a;--card2:#111c31;--blue:#38bdf8;
+      --purple:#a855f7;--green:#22c55e;--yellow:#f59e0b;--red:#ef4444;
+      --white:#fff;--muted:#94a3b8;--line:rgba(255,255,255,.09)
     }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: radial-gradient(circle at top left, #12345a, var(--bg));
-      color: var(--white);
-      min-height: 100vh;
-    }
-
-    .app {
-      width: min(1200px, 92%);
-      margin: auto;
-      padding: 28px 0 60px;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 26px;
-    }
-
-    .brand h1 { font-size: 34px; }
-    .brand p { color: var(--muted); margin-top: 4px; }
-
-    .tabs {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 26px;
-    }
-
-    .tab-btn {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.06);
-      color: var(--white);
-      padding: 11px 16px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    .tab-btn.active {
-      background: var(--blue);
-      color: #020617;
-    }
-
-    .tab { display: none; }
-    .tab.active { display: block; }
-
-    .grid {
-      display: grid;
-      gap: 18px;
-    }
-
-    .stats {
-      grid-template-columns: repeat(4, 1fr);
-      margin-bottom: 22px;
-    }
-
-    .card {
-      background: rgba(15,23,42,0.88);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 22px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.24);
-    }
-
-    .stat h2 {
-      font-size: 34px;
-      color: var(--blue);
-    }
-
-    .stat p { color: var(--muted); font-weight: 700; }
-
-    .section-title {
-      margin-bottom: 16px;
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .section-title h2 { font-size: 24px; }
-    .section-title p { color: var(--muted); margin-top: 4px; }
-
-    .form {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr auto;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      background: #020617;
-      border: 1px solid var(--line);
-      color: var(--white);
-      padding: 13px;
-      border-radius: 14px;
-      outline: none;
-    }
-
-    textarea { min-height: 90px; resize: vertical; }
-
-    button {
-      border: none;
-      background: var(--blue);
-      color: #020617;
-      font-weight: 900;
-      padding: 13px 18px;
-      border-radius: 14px;
-      cursor: pointer;
-    }
-
-    .danger { background: var(--red); color: white; }
-    .success { background: var(--green); color: #03120a; }
-    .warning { background: var(--yellow); color: #1a1000; }
-
-    .kanban {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .column h3 {
-      margin-bottom: 14px;
-      color: var(--blue);
-    }
-
-    .task {
-      background: var(--card2);
-      border: 1px solid var(--line);
-      padding: 16px;
-      border-radius: 18px;
-      margin-bottom: 12px;
-    }
-
-    .task h4 { margin-bottom: 8px; }
-    .task p { color: var(--muted); font-size: 14px; margin-bottom: 12px; }
-
-    .pill {
-      display: inline-block;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(56,189,248,0.12);
-      color: var(--blue);
-      font-size: 12px;
-      font-weight: 800;
-      margin-right: 5px;
-      margin-bottom: 8px;
-    }
-
-    .task-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    .task-actions button {
-      padding: 8px 10px;
-      font-size: 12px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      overflow: hidden;
-      border-radius: 18px;
-    }
-
-    th, td {
-      padding: 14px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-    }
-
-    th { color: var(--blue); }
-    td { color: #dbeafe; }
-
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-
-    .event, .note {
-      padding: 16px;
-      background: var(--card2);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      margin-bottom: 12px;
-    }
-
-    .event h4, .note h4 { margin-bottom: 6px; }
-    .event p, .note p { color: var(--muted); }
-
-    @media (max-width: 900px) {
-      .stats, .kanban, .two-col, .form {
-        grid-template-columns: 1fr;
-      }
-
-      header {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-    }
+    body{font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at top left,#16345f,var(--bg));color:var(--white);min-height:100vh}
+    .app{width:min(1200px,94%);margin:auto;padding:28px 0 60px}
+    header{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:24px}
+    .brand h1{font-size:34px}
+    .brand p{color:var(--muted);margin-top:5px}
+    .badge{background:rgba(34,197,94,.14);color:var(--green);padding:10px 14px;border-radius:999px;font-weight:800}
+    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+    .tab-btn{border:1px solid var(--line);background:rgba(255,255,255,.06);color:white;padding:11px 16px;border-radius:999px;cursor:pointer;font-weight:800}
+    .tab-btn.active{background:var(--blue);color:#020617}
+    .tab{display:none}.tab.active{display:block}
+    .grid{display:grid;gap:18px}
+    .stats{grid-template-columns:repeat(4,1fr);margin-bottom:20px}
+    .card{background:rgba(15,23,42,.9);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 18px 50px rgba(0,0,0,.25)}
+    .stat h2{font-size:36px;color:var(--blue)}.stat p{color:var(--muted);font-weight:800}
+    .section-title{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:16px}
+    .section-title p{color:var(--muted);margin-top:4px}
+    input,select,textarea{width:100%;background:#020617;border:1px solid var(--line);color:white;padding:13px;border-radius:14px;outline:none}
+    textarea{min-height:90px;resize:vertical}
+    button{border:none;background:var(--blue);color:#020617;font-weight:900;padding:13px 16px;border-radius:14px;cursor:pointer}
+    .danger{background:var(--red);color:white}.success{background:var(--green);color:#03120a}.warning{background:var(--yellow);color:#1a1000}
+    .form{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr auto;gap:10px;margin-bottom:18px}
+    .kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .column h3{margin-bottom:14px;color:var(--blue)}
+    .task,.item{background:var(--card2);border:1px solid var(--line);padding:16px;border-radius:18px;margin-bottom:12px}
+    .task h4,.item h4{margin-bottom:8px}.task p,.item p{color:var(--muted);font-size:14px;margin-bottom:8px}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(56,189,248,.12);color:var(--blue);font-size:12px;font-weight:900;margin:4px 5px 6px 0}
+    .task-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.task-actions button{padding:8px 10px;font-size:12px}
+    table{width:100%;border-collapse:collapse}th,td{padding:14px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--blue)}td{color:#dbeafe}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .login{position:fixed;inset:0;background:rgba(2,6,23,.95);display:flex;align-items:center;justify-content:center;z-index:99}
+    .login-box{width:min(420px,92%);background:var(--card);border:1px solid var(--line);border-radius:26px;padding:28px;text-align:center}
+    .login-box h2{font-size:30px;margin-bottom:10px}.login-box p{color:var(--muted);margin-bottom:18px}
+    .hidden{display:none!important}
+    @media(max-width:900px){.stats,.kanban,.two-col,.form{grid-template-columns:1fr}header{flex-direction:column;align-items:flex-start}}
   </style>
 </head>
 
 <body>
+  <div id="loginScreen" class="login">
+    <div class="login-box">
+      <h2>Youth Central</h2>
+      <p>Enter the team access code to continue.</p>
+      <input id="accessCode" placeholder="Access code" type="password">
+      <br><br>
+      <button onclick="checkAccess()">Enter Dashboard</button>
+      <p style="margin-top:14px;font-size:13px;">Default code: <b>core123</b></p>
+    </div>
+  </div>
+
   <div class="app">
     <header>
       <div class="brand">
         <h1>Youth Central</h1>
-        <p>Simple task, event and team tracker for the youth team.</p>
+        <p>Live task, team, event and announcement hub for the core team.</p>
       </div>
-      <button onclick="resetDemo()" class="warning">Reset Demo Data</button>
+      <div class="badge">● Live Sync</div>
     </header>
 
     <div class="tabs">
-      <button class="tab-btn active" onclick="openTab('dashboard')">Dashboard</button>
-      <button class="tab-btn" onclick="openTab('tasks')">Tasks</button>
-      <button class="tab-btn" onclick="openTab('team')">Team</button>
-      <button class="tab-btn" onclick="openTab('events')">Events</button>
-      <button class="tab-btn" onclick="openTab('announcements')">Announcements</button>
+      <button class="tab-btn active" onclick="openTab('dashboard', this)">Dashboard</button>
+      <button class="tab-btn" onclick="openTab('tasks', this)">Tasks</button>
+      <button class="tab-btn" onclick="openTab('team', this)">Team</button>
+      <button class="tab-btn" onclick="openTab('events', this)">Events</button>
+      <button class="tab-btn" onclick="openTab('announcements', this)">Announcements</button>
     </div>
 
     <section id="dashboard" class="tab active">
       <div class="grid stats">
         <div class="card stat"><h2 id="totalTasks">0</h2><p>Total Tasks</p></div>
+        <div class="card stat"><h2 id="progressCount">0</h2><p>In Progress</p></div>
         <div class="card stat"><h2 id="doneTasks">0</h2><p>Completed</p></div>
-        <div class="card stat"><h2 id="pendingTasks">0</h2><p>Pending</p></div>
         <div class="card stat"><h2 id="teamCount">0</h2><p>Team Members</p></div>
       </div>
-
       <div class="two-col">
-        <div class="card">
-          <div class="section-title">
-            <div>
-              <h2>Upcoming Events</h2>
-              <p>Next youth activities.</p>
-            </div>
-          </div>
-          <div id="dashboardEvents"></div>
-        </div>
-
-        <div class="card">
-          <div class="section-title">
-            <div>
-              <h2>Top Members</h2>
-              <p>Based on completed tasks.</p>
-            </div>
-          </div>
-          <div id="leaderboard"></div>
-        </div>
+        <div class="card"><h2>Upcoming Events</h2><br><div id="dashboardEvents"></div></div>
+        <div class="card"><h2>Team Leaderboard</h2><br><div id="leaderboard"></div></div>
       </div>
     </section>
 
     <section id="tasks" class="tab">
       <div class="card">
-        <div class="section-title">
-          <div>
-            <h2>Task Board</h2>
-            <p>Add tasks, assign people and track progress.</p>
-          </div>
-        </div>
-
+        <div class="section-title"><div><h2>Task Board</h2><p>Everyone sees updates live.</p></div></div>
         <div class="form">
           <input id="taskTitle" placeholder="Task name">
           <select id="taskOwner"></select>
-          <select id="taskPriority">
-            <option>Normal</option>
-            <option>High</option>
-            <option>Urgent</option>
-          </select>
-          <button onclick="addTask()">Add Task</button>
+          <input id="taskDue" type="date">
+          <select id="taskPriority"><option>Normal</option><option>High</option><option>Urgent</option></select>
+          <button onclick="addTask()">Add</button>
         </div>
 
         <div class="kanban">
-          <div class="card column">
-            <h3>To Do</h3>
-            <div id="todoTasks"></div>
-          </div>
-          <div class="card column">
-            <h3>In Progress</h3>
-            <div id="progressTasks"></div>
-          </div>
-          <div class="card column">
-            <h3>Completed</h3>
-            <div id="completedTasks"></div>
-          </div>
+          <div class="card column"><h3>To Do</h3><div id="todoTasks"></div></div>
+          <div class="card column"><h3>In Progress</h3><div id="progressTasks"></div></div>
+          <div class="card column"><h3>Completed</h3><div id="completedTasks"></div></div>
         </div>
       </div>
     </section>
 
     <section id="team" class="tab">
       <div class="card">
-        <div class="section-title">
-          <div>
-            <h2>Team Members</h2>
-            <p>Add your youth team and assign areas.</p>
-          </div>
-        </div>
-
-        <div class="form">
+        <div class="section-title"><div><h2>Team Members</h2><p>Add your core team here.</p></div></div>
+        <div class="form" style="grid-template-columns:1fr 1fr 1fr auto;">
           <input id="memberName" placeholder="Name">
           <input id="memberRole" placeholder="Team / Role">
-          <select id="memberStatus">
-            <option>Active</option>
-            <option>Pending</option>
-            <option>Needs Follow-up</option>
-          </select>
-          <button onclick="addMember()">Add Member</button>
+          <select id="memberStatus"><option>Active</option><option>Pending</option><option>Needs Follow-up</option></select>
+          <button onclick="addMember()">Add</button>
         </div>
-
         <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Team</th>
-              <th>Status</th>
-              <th>Completed Tasks</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Name</th><th>Role</th><th>Status</th><th>Completed</th><th>Action</th></tr></thead>
           <tbody id="memberTable"></tbody>
         </table>
       </div>
@@ -354,279 +128,134 @@
 
     <section id="events" class="tab">
       <div class="card">
-        <div class="section-title">
-          <div>
-            <h2>Events</h2>
-            <p>Track youth meetings, tournaments and services.</p>
-          </div>
-        </div>
-
-        <div class="form">
+        <div class="section-title"><div><h2>Events</h2><p>Plan youth events and responsibilities.</p></div></div>
+        <div class="form" style="grid-template-columns:1fr 1fr 1fr auto;">
           <input id="eventTitle" placeholder="Event name">
           <input id="eventDate" type="date">
           <input id="eventOwner" placeholder="Person in charge">
-          <button onclick="addEvent()">Add Event</button>
+          <button onclick="addEvent()">Add</button>
         </div>
-
         <div id="eventList"></div>
       </div>
     </section>
 
     <section id="announcements" class="tab">
       <div class="card">
-        <div class="section-title">
-          <div>
-            <h2>Announcements</h2>
-            <p>Keep important updates in one place.</p>
-          </div>
-        </div>
-
+        <div class="section-title"><div><h2>Announcements</h2><p>Important team updates.</p></div></div>
         <textarea id="announcementText" placeholder="Write announcement..."></textarea>
         <br><br>
-        <button onclick="addAnnouncement()">Post Announcement</button>
+        <button onclick="addAnnouncement()">Post</button>
         <br><br>
         <div id="announcementList"></div>
       </div>
     </section>
   </div>
 
-  <script>
-    let members = JSON.parse(localStorage.getItem("members")) || [
-      { name: "Shemaya", role: "Media", status: "Active" },
-      { name: "Dineth", role: "Worship", status: "Active" },
-      { name: "Yohan", role: "Leadership", status: "Active" }
-    ];
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || [
-      { title: "Design event artwork", owner: "Shemaya", priority: "High", status: "todo" },
-      { title: "Confirm sound system", owner: "Dineth", priority: "Normal", status: "progress" },
-      { title: "Finalize event plan", owner: "Yohan", priority: "Urgent", status: "completed" }
-    ];
+    const firebaseConfig = {
+      apiKey: "AIzaSyCdMfitam8d7UwVfP2I3jbuDIYvW-lAB-c",
+      authDomain: "youth-tasks.firebaseapp.com",
+      projectId: "youth-tasks",
+      storageBucket: "youth-tasks.firebasestorage.app",
+      messagingSenderId: "824413713361",
+      appId: "1:824413713361:web:6c84c4ce1efab73b3c66f0",
+      measurementId: "G-PKMFQ4Z1PZ"
+    };
 
-    let events = JSON.parse(localStorage.getItem("events")) || [
-      { title: "4More 2.0", date: "2026-07-24", owner: "Leadership Team" },
-      { title: "Youth Night", date: "2026-08-02", owner: "Youth Team" }
-    ];
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-    let announcements = JSON.parse(localStorage.getItem("announcements")) || [
-      "Team, please update your task progress before the next youth meeting."
-    ];
+    let members = [];
+    let tasks = [];
+    let events = [];
+    let announcements = [];
 
-    function save() {
-      localStorage.setItem("members", JSON.stringify(members));
-      localStorage.setItem("tasks", JSON.stringify(tasks));
-      localStorage.setItem("events", JSON.stringify(events));
-      localStorage.setItem("announcements", JSON.stringify(announcements));
+    const TEAM_CODE = "core123";
+
+    window.checkAccess = function(){
+      const code = document.getElementById("accessCode").value.trim();
+      if(code === TEAM_CODE){
+        localStorage.setItem("youthAccess","yes");
+        document.getElementById("loginScreen").classList.add("hidden");
+      } else {
+        alert("Wrong access code");
+      }
     }
 
-    function openTab(tabName) {
-      document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
-      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+    if(localStorage.getItem("youthAccess")==="yes"){
+      document.getElementById("loginScreen").classList.add("hidden");
+    }
+
+    window.openTab = function(tabName, btn){
+      document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+      document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
       document.getElementById(tabName).classList.add("active");
-      event.target.classList.add("active");
-      render();
+      btn.classList.add("active");
     }
 
-    function addMember() {
+    window.addMember = async function(){
       const name = document.getElementById("memberName").value.trim();
       const role = document.getElementById("memberRole").value.trim();
       const status = document.getElementById("memberStatus").value;
-
-      if (!name || !role) return alert("Add name and role.");
-
-      members.push({ name, role, status });
-      document.getElementById("memberName").value = "";
-      document.getElementById("memberRole").value = "";
-      save();
-      render();
+      if(!name || !role) return alert("Add name and role");
+      await addDoc(collection(db,"members"),{name,role,status,createdAt:serverTimestamp()});
+      document.getElementById("memberName").value="";
+      document.getElementById("memberRole").value="";
     }
 
-    function deleteMember(index) {
-      if (!confirm("Delete this member?")) return;
-      members.splice(index, 1);
-      save();
-      render();
+    window.deleteMember = async function(id){
+      if(confirm("Delete this member?")) await deleteDoc(doc(db,"members",id));
     }
 
-    function addTask() {
+    window.addTask = async function(){
       const title = document.getElementById("taskTitle").value.trim();
       const owner = document.getElementById("taskOwner").value;
+      const due = document.getElementById("taskDue").value;
       const priority = document.getElementById("taskPriority").value;
-
-      if (!title) return alert("Add task name.");
-
-      tasks.push({ title, owner, priority, status: "todo" });
-      document.getElementById("taskTitle").value = "";
-      save();
-      render();
+      if(!title) return alert("Add task name");
+      await addDoc(collection(db,"tasks"),{title,owner,due,priority,status:"todo",createdAt:serverTimestamp()});
+      document.getElementById("taskTitle").value="";
+      document.getElementById("taskDue").value="";
     }
 
-    function moveTask(index, status) {
-      tasks[index].status = status;
-      save();
-      render();
+    window.moveTask = async function(id,status){
+      await updateDoc(doc(db,"tasks",id),{status});
     }
 
-    function deleteTask(index) {
-      if (!confirm("Delete this task?")) return;
-      tasks.splice(index, 1);
-      save();
-      render();
+    window.deleteTask = async function(id){
+      if(confirm("Delete this task?")) await deleteDoc(doc(db,"tasks",id));
     }
 
-    function addEvent() {
+    window.addEvent = async function(){
       const title = document.getElementById("eventTitle").value.trim();
       const date = document.getElementById("eventDate").value;
       const owner = document.getElementById("eventOwner").value.trim();
-
-      if (!title || !date || !owner) return alert("Fill all event details.");
-
-      events.push({ title, date, owner });
-      document.getElementById("eventTitle").value = "";
-      document.getElementById("eventDate").value = "";
-      document.getElementById("eventOwner").value = "";
-      save();
-      render();
+      if(!title || !date || !owner) return alert("Fill all event details");
+      await addDoc(collection(db,"events"),{title,date,owner,createdAt:serverTimestamp()});
+      document.getElementById("eventTitle").value="";
+      document.getElementById("eventDate").value="";
+      document.getElementById("eventOwner").value="";
     }
 
-    function deleteEvent(index) {
-      events.splice(index, 1);
-      save();
-      render();
+    window.deleteEvent = async function(id){
+      if(confirm("Delete this event?")) await deleteDoc(doc(db,"events",id));
     }
 
-    function addAnnouncement() {
+    window.addAnnouncement = async function(){
       const text = document.getElementById("announcementText").value.trim();
-      if (!text) return alert("Write an announcement.");
-      announcements.unshift(text);
-      document.getElementById("announcementText").value = "";
-      save();
-      render();
+      if(!text) return alert("Write announcement");
+      await addDoc(collection(db,"announcements"),{text,createdAt:serverTimestamp()});
+      document.getElementById("announcementText").value="";
     }
 
-    function deleteAnnouncement(index) {
-      announcements.splice(index, 1);
-      save();
-      render();
+    window.deleteAnnouncement = async function(id){
+      if(confirm("Delete this announcement?")) await deleteDoc(doc(db,"announcements",id));
     }
 
-    function renderTasks() {
-      const columns = {
-        todo: document.getElementById("todoTasks"),
-        progress: document.getElementById("progressTasks"),
-        completed: document.getElementById("completedTasks")
-      };
-
-      Object.values(columns).forEach(col => col.innerHTML = "");
-
-      tasks.forEach((task, index) => {
-        const html = `
-          <div class="task">
-            <h4>${task.title}</h4>
-            <p>Assigned to: <strong>${task.owner}</strong></p>
-            <span class="pill">${task.priority}</span>
-            <span class="pill">${task.status}</span>
-            <div class="task-actions">
-              <button onclick="moveTask(${index}, 'todo')">To Do</button>
-              <button class="warning" onclick="moveTask(${index}, 'progress')">Progress</button>
-              <button class="success" onclick="moveTask(${index}, 'completed')">Done</button>
-              <button class="danger" onclick="deleteTask(${index})">Delete</button>
-            </div>
-          </div>
-        `;
-        columns[task.status].innerHTML += html;
-      });
-    }
-
-    function renderMembers() {
-      const table = document.getElementById("memberTable");
-      table.innerHTML = "";
-
-      const ownerSelect = document.getElementById("taskOwner");
-      ownerSelect.innerHTML = "";
-
-      members.forEach((member, index) => {
-        const completed = tasks.filter(t => t.owner === member.name && t.status === "completed").length;
-
-        ownerSelect.innerHTML += `<option>${member.name}</option>`;
-
-        table.innerHTML += `
-          <tr>
-            <td>${member.name}</td>
-            <td>${member.role}</td>
-            <td>${member.status}</td>
-            <td>${completed}</td>
-            <td><button class="danger" onclick="deleteMember(${index})">Delete</button></td>
-          </tr>
-        `;
-      });
-    }
-
-    function renderEvents() {
-      const eventList = document.getElementById("eventList");
-      const dashboardEvents = document.getElementById("dashboardEvents");
-
-      eventList.innerHTML = "";
-      dashboardEvents.innerHTML = "";
-
-      events.forEach((item, index) => {
-        const html = `
-          <div class="event">
-            <h4>${item.title}</h4>
-            <p>Date: ${item.date}</p>
-            <p>Owner: ${item.owner}</p>
-            <br>
-            <button class="danger" onclick="deleteEvent(${index})">Delete</button>
-          </div>
-        `;
-
-        eventList.innerHTML += html;
-        if (index < 3) dashboardEvents.innerHTML += html.replace(`<br>\n            <button class="danger" onclick="deleteEvent(${index})">Delete</button>`, "");
-      });
-    }
-
-    function renderAnnouncements() {
-      const list = document.getElementById("announcementList");
-      list.innerHTML = "";
-
-      announcements.forEach((text, index) => {
-        list.innerHTML += `
-          <div class="note">
-            <h4>Announcement</h4>
-            <p>${text}</p>
-            <br>
-            <button class="danger" onclick="deleteAnnouncement(${index})">Delete</button>
-          </div>
-        `;
-      });
-    }
-
-    function renderDashboard() {
-      document.getElementById("totalTasks").innerText = tasks.length;
-      document.getElementById("doneTasks").innerText = tasks.filter(t => t.status === "completed").length;
-      document.getElementById("pendingTasks").innerText = tasks.filter(t => t.status !== "completed").length;
-      document.getElementById("teamCount").innerText = members.length;
-
-      const leaderboard = document.getElementById("leaderboard");
-      leaderboard.innerHTML = "";
-
-      const scores = members.map(member => ({
-        name: member.name,
-        role: member.role,
-        score: tasks.filter(t => t.owner === member.name && t.status === "completed").length
-      })).sort((a,b) => b.score - a.score);
-
-      scores.forEach(person => {
-        leaderboard.innerHTML += `
-          <div class="event">
-            <h4>${person.name}</h4>
-            <p>${person.role} • ${person.score} completed tasks</p>
-          </div>
-        `;
-      });
-    }
-
-    function render() {
+    function render(){
       renderMembers();
       renderTasks();
       renderEvents();
@@ -634,13 +263,123 @@
       renderDashboard();
     }
 
-    function resetDemo() {
-      if (!confirm("This will reset all data. Continue?")) return;
-      localStorage.clear();
-      location.reload();
+    function renderMembers(){
+      const table = document.getElementById("memberTable");
+      const ownerSelect = document.getElementById("taskOwner");
+      table.innerHTML="";
+      ownerSelect.innerHTML="";
+
+      members.forEach(m=>{
+        const completed = tasks.filter(t=>t.owner===m.name && t.status==="completed").length;
+        ownerSelect.innerHTML += `<option>${m.name}</option>`;
+        table.innerHTML += `
+          <tr>
+            <td>${m.name}</td>
+            <td>${m.role}</td>
+            <td>${m.status}</td>
+            <td>${completed}</td>
+            <td><button class="danger" onclick="deleteMember('${m.id}')">Delete</button></td>
+          </tr>`;
+      });
     }
 
-    render();
+    function renderTasks(){
+      const cols = {
+        todo:document.getElementById("todoTasks"),
+        progress:document.getElementById("progressTasks"),
+        completed:document.getElementById("completedTasks")
+      };
+      Object.values(cols).forEach(c=>c.innerHTML="");
+
+      tasks.forEach(t=>{
+        const html = `
+          <div class="task">
+            <h4>${t.title}</h4>
+            <p>Owner: <b>${t.owner || "Unassigned"}</b></p>
+            <p>Due: ${t.due || "No date"}</p>
+            <span class="pill">${t.priority}</span>
+            <span class="pill">${t.status}</span>
+            <div class="task-actions">
+              <button onclick="moveTask('${t.id}','todo')">To Do</button>
+              <button class="warning" onclick="moveTask('${t.id}','progress')">Progress</button>
+              <button class="success" onclick="moveTask('${t.id}','completed')">Done</button>
+              <button class="danger" onclick="deleteTask('${t.id}')">Delete</button>
+            </div>
+          </div>`;
+        cols[t.status || "todo"].innerHTML += html;
+      });
+    }
+
+    function renderEvents(){
+      const list = document.getElementById("eventList");
+      const dash = document.getElementById("dashboardEvents");
+      list.innerHTML="";
+      dash.innerHTML="";
+
+      events.forEach((e,i)=>{
+        const html = `
+          <div class="item">
+            <h4>${e.title}</h4>
+            <p>Date: ${e.date}</p>
+            <p>Owner: ${e.owner}</p>
+            <button class="danger" onclick="deleteEvent('${e.id}')">Delete</button>
+          </div>`;
+        list.innerHTML += html;
+
+        if(i<3){
+          dash.innerHTML += `<div class="item"><h4>${e.title}</h4><p>${e.date}</p><p>${e.owner}</p></div>`;
+        }
+      });
+    }
+
+    function renderAnnouncements(){
+      const list = document.getElementById("announcementList");
+      list.innerHTML="";
+      announcements.forEach(a=>{
+        list.innerHTML += `
+          <div class="item">
+            <h4>Announcement</h4>
+            <p>${a.text}</p>
+            <button class="danger" onclick="deleteAnnouncement('${a.id}')">Delete</button>
+          </div>`;
+      });
+    }
+
+    function renderDashboard(){
+      document.getElementById("totalTasks").innerText = tasks.length;
+      document.getElementById("progressCount").innerText = tasks.filter(t=>t.status==="progress").length;
+      document.getElementById("doneTasks").innerText = tasks.filter(t=>t.status==="completed").length;
+      document.getElementById("teamCount").innerText = members.length;
+
+      const board = document.getElementById("leaderboard");
+      board.innerHTML="";
+      members.map(m=>({
+        ...m,
+        score:tasks.filter(t=>t.owner===m.name && t.status==="completed").length
+      })).sort((a,b)=>b.score-a.score).forEach(m=>{
+        board.innerHTML += `<div class="item"><h4>${m.name}</h4><p>${m.role} • ${m.score} completed tasks</p></div>`;
+      });
+    }
+
+    onSnapshot(collection(db,"members"), snap=>{
+      members = snap.docs.map(d=>({id:d.id,...d.data()}));
+      render();
+    });
+
+    onSnapshot(collection(db,"tasks"), snap=>{
+      tasks = snap.docs.map(d=>({id:d.id,...d.data()}));
+      render();
+    });
+
+    onSnapshot(collection(db,"events"), snap=>{
+      events = snap.docs.map(d=>({id:d.id,...d.data()}));
+      render();
+    });
+
+    onSnapshot(collection(db,"announcements"), snap=>{
+      announcements = snap.docs.map(d=>({id:d.id,...d.data()}));
+      render();
+    });
   </script>
 </body>
 </html>
