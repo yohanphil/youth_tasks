@@ -3,157 +3,515 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Youth Central | Live Task Hub</title>
+  <meta name="theme-color" content="#080a18" />
+  <title>Youth Central | Core Team Hub</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
     :root{
-      --bg:#07111f;--card:#0f172a;--card2:#111c31;--blue:#38bdf8;
-      --purple:#a855f7;--green:#22c55e;--yellow:#f59e0b;--red:#ef4444;
-      --white:#fff;--muted:#94a3b8;--line:rgba(255,255,255,.09)
+      --bg:#070816;
+      --bg2:#0b1020;
+      --glass:rgba(14, 20, 40, .74);
+      --glass2:rgba(255,255,255,.075);
+      --line:rgba(255,255,255,.12);
+      --line2:rgba(255,255,255,.2);
+      --text:#f8fafc;
+      --soft:#cbd5e1;
+      --muted:#94a3b8;
+      --cyan:#22d3ee;
+      --blue:#60a5fa;
+      --purple:#a855f7;
+      --pink:#ec4899;
+      --green:#22c55e;
+      --yellow:#f59e0b;
+      --red:#ef4444;
+      --shadow:0 28px 90px rgba(0,0,0,.46);
+      --radius:30px;
     }
-    body{font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at top left,#16345f,var(--bg));color:var(--white);min-height:100vh}
-    .app{width:min(1200px,94%);margin:auto;padding:28px 0 60px}
-    header{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:24px}
-    .brand h1{font-size:34px}
-    .brand p{color:var(--muted);margin-top:5px}
-    .badge{background:rgba(34,197,94,.14);color:var(--green);padding:10px 14px;border-radius:999px;font-weight:800}
-    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
-    .tab-btn{border:1px solid var(--line);background:rgba(255,255,255,.06);color:white;padding:11px 16px;border-radius:999px;cursor:pointer;font-weight:800}
-    .tab-btn.active{background:var(--blue);color:#020617}
-    .tab{display:none}.tab.active{display:block}
-    .grid{display:grid;gap:18px}
-    .stats{grid-template-columns:repeat(4,1fr);margin-bottom:20px}
-    .card{background:rgba(15,23,42,.9);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 18px 50px rgba(0,0,0,.25)}
-    .stat h2{font-size:36px;color:var(--blue)}.stat p{color:var(--muted);font-weight:800}
-    .section-title{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:16px}
-    .section-title p{color:var(--muted);margin-top:4px}
-    input,select,textarea{width:100%;background:#020617;border:1px solid var(--line);color:white;padding:13px;border-radius:14px;outline:none}
-    textarea{min-height:90px;resize:vertical}
-    button{border:none;background:var(--blue);color:#020617;font-weight:900;padding:13px 16px;border-radius:14px;cursor:pointer}
-    .danger{background:var(--red);color:white}.success{background:var(--green);color:#03120a}.warning{background:var(--yellow);color:#1a1000}
-    .form{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr auto;gap:10px;margin-bottom:18px}
-    .kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .column h3{margin-bottom:14px;color:var(--blue)}
-    .task,.item{background:var(--card2);border:1px solid var(--line);padding:16px;border-radius:18px;margin-bottom:12px}
-    .task h4,.item h4{margin-bottom:8px}.task p,.item p{color:var(--muted);font-size:14px;margin-bottom:8px}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(56,189,248,.12);color:var(--blue);font-size:12px;font-weight:900;margin:4px 5px 6px 0}
-    .task-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.task-actions button{padding:8px 10px;font-size:12px}
-    table{width:100%;border-collapse:collapse}th,td{padding:14px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--blue)}td{color:#dbeafe}
-    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .login{position:fixed;inset:0;background:rgba(2,6,23,.95);display:flex;align-items:center;justify-content:center;z-index:99}
-    .login-box{width:min(420px,92%);background:var(--card);border:1px solid var(--line);border-radius:26px;padding:28px;text-align:center}
-    .login-box h2{font-size:30px;margin-bottom:10px}.login-box p{color:var(--muted);margin-bottom:18px}
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      min-height:100vh;
+      font-family:"Plus Jakarta Sans", system-ui, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 7% 6%, rgba(34,211,238,.26), transparent 30%),
+        radial-gradient(circle at 92% 11%, rgba(168,85,247,.27), transparent 31%),
+        radial-gradient(circle at 72% 90%, rgba(236,72,153,.19), transparent 32%),
+        linear-gradient(135deg, #050713 0%, #0b1020 50%, #070816 100%);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.032) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.032) 1px, transparent 1px);
+      background-size:54px 54px;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,.78), transparent 82%);
+      z-index:-3;
+    }
+
+    .blob{
+      position:fixed;
+      width:440px;height:440px;border-radius:999px;
+      filter:blur(54px);opacity:.32;z-index:-2;
+      animation:float 13s ease-in-out infinite alternate;
+    }
+    .b1{background:var(--cyan);top:-130px;left:-110px}
+    .b2{background:var(--purple);top:-40px;right:-120px;animation-delay:2s}
+    .b3{background:var(--pink);bottom:-170px;right:18%;animation-delay:4s}
+    @keyframes float{to{transform:translate(45px,48px) scale(1.14)}}
+
+    .app{
+      width:min(1460px, 96%);
+      margin:auto;
+      padding:22px 0 55px;
+      display:grid;
+      grid-template-columns:292px 1fr;
+      gap:20px;
+    }
+
+    .sidebar{
+      position:sticky;top:22px;
+      height:calc(100vh - 44px);
+      border:1px solid var(--line);
+      border-radius:34px;
+      background:rgba(7,10,22,.66);
+      backdrop-filter:blur(28px);
+      box-shadow:var(--shadow);
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+    }
+
+    .brand{
+      display:flex;align-items:center;gap:13px;
+      padding:10px 10px 18px;
+      border-bottom:1px solid var(--line);
+      margin-bottom:14px;
+    }
+
+    .logo{
+      width:58px;height:58px;border-radius:21px;
+      display:grid;place-items:center;flex:none;
+      background:linear-gradient(135deg, var(--cyan), var(--purple) 56%, var(--pink));
+      box-shadow:0 18px 45px rgba(34,211,238,.2);
+      position:relative;overflow:hidden;
+    }
+    .logo::after{
+      content:"";position:absolute;inset:-45%;
+      background:linear-gradient(120deg, transparent, rgba(255,255,255,.62), transparent);
+      transform:rotate(28deg) translateX(-80%);
+      animation:shine 4.5s ease-in-out infinite;
+    }
+    @keyframes shine{55%,100%{transform:rotate(28deg) translateX(95%)}}
+    .logo svg{position:relative;z-index:1}
+
+    .brand h1{font-size:19px;letter-spacing:-.04em;line-height:1}
+    .brand p{color:var(--muted);font-size:12px;margin-top:5px}
+
+    .nav{display:grid;gap:8px}
+    .nav-btn{
+      width:100%;border:1px solid transparent;background:transparent;color:var(--soft);
+      padding:13px 14px;border-radius:18px;display:flex;align-items:center;gap:12px;
+      cursor:pointer;font-weight:900;text-align:left;transition:.28s ease;
+    }
+    .nav-btn:hover{background:rgba(255,255,255,.07);color:white;transform:translateX(4px)}
+    .nav-btn.active{
+      color:white;background:linear-gradient(135deg, rgba(34,211,238,.18), rgba(168,85,247,.18));
+      border-color:rgba(255,255,255,.14);
+    }
+    .nav-icon{
+      width:32px;height:32px;border-radius:13px;display:grid;place-items:center;
+      background:rgba(255,255,255,.08);flex:none;
+    }
+
+    .sidebar-footer{
+      margin-top:auto;padding:16px;border-radius:24px;
+      background:linear-gradient(135deg, rgba(34,211,238,.13), rgba(168,85,247,.14));
+      border:1px solid var(--line);
+    }
+    .live-pill{display:inline-flex;align-items:center;gap:8px;font-weight:900;color:#cffafe;font-size:12px;margin-bottom:8px}
+    .pulse{width:8px;height:8px;background:var(--green);border-radius:999px;box-shadow:0 0 0 0 rgba(34,197,94,.8);animation:pulse 1.8s infinite}
+    @keyframes pulse{70%{box-shadow:0 0 0 12px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+    .sidebar-footer p{font-size:12px;line-height:1.6;color:var(--muted)}
+
+    .main{min-width:0}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:8px 2px 18px}
+    .mobile-menu{display:none;border:1px solid var(--line);background:rgba(255,255,255,.08);color:white;width:46px;height:46px;border-radius:16px;cursor:pointer;font-size:22px}
+
+    .hero{
+      position:relative;overflow:hidden;
+      min-height:255px;padding:30px;border-radius:38px;margin-bottom:20px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.13), rgba(255,255,255,.055)),
+        radial-gradient(circle at 14% 0%, rgba(34,211,238,.23), transparent 40%),
+        radial-gradient(circle at 80% 12%, rgba(168,85,247,.21), transparent 43%);
+      border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(24px);
+    }
+    .hero::before{
+      content:"";position:absolute;right:-140px;bottom:-210px;width:500px;height:500px;border-radius:999px;
+      background:conic-gradient(from 180deg, rgba(34,211,238,.3), rgba(168,85,247,.25), rgba(236,72,153,.24), rgba(34,211,238,.3));
+      animation:spin 14s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .hero-content{position:relative;z-index:2;display:grid;grid-template-columns:1.35fr .65fr;gap:24px;align-items:end}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;
+      color:#cffafe;background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.2);
+      font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;
+    }
+    .hero h2{font-size:clamp(36px,5vw,66px);line-height:.95;letter-spacing:-.08em;max-width:740px}
+    .hero h2 span{background:linear-gradient(90deg,#fff,#bff7ff,#f0abfc);-webkit-background-clip:text;color:transparent}
+    .hero p{color:var(--soft);max-width:680px;margin-top:16px;line-height:1.7;font-size:15px}
+    .quick-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+
+    button,.btn{
+      border:none;outline:none;cursor:pointer;font:inherit;font-weight:900;
+      padding:12px 16px;border-radius:16px;color:#06111f;
+      background:linear-gradient(135deg,var(--cyan),var(--blue));
+      transition:.25s ease;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;
+    }
+    button:hover,.btn:hover{transform:translateY(-2px);filter:saturate(1.15);box-shadow:0 12px 32px rgba(34,211,238,.18)}
+    .btn-ghost{color:white;background:rgba(255,255,255,.08);border:1px solid var(--line)}
+    .btn-danger{background:rgba(239,68,68,.17);color:#fecaca;border:1px solid rgba(239,68,68,.25)}
+    .btn-green{background:linear-gradient(135deg,#22c55e,#86efac);color:#03120a}
+    .btn-yellow{background:linear-gradient(135deg,#f59e0b,#fde68a);color:#1a1000}
+    .btn-purple{background:linear-gradient(135deg,#a855f7,#f0abfc);color:#160022}
+    .mini-btn{padding:8px 10px;border-radius:12px;font-size:12px}
+
+    .page{display:none;animation:pageIn .45s ease both}
+    .page.active{display:block}
+    @keyframes pageIn{from{opacity:0;transform:translateY(12px) scale(.992);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+    .stat-card{
+      position:relative;overflow:hidden;border:1px solid var(--line);border-radius:28px;padding:22px;
+      background:rgba(15,23,42,.72);backdrop-filter:blur(22px);box-shadow:0 14px 48px rgba(0,0,0,.23);transition:.3s ease;
+    }
+    .stat-card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.22)}
+    .stat-card::after{content:"";position:absolute;right:-54px;top:-54px;width:130px;height:130px;border-radius:999px;background:var(--glow, rgba(34,211,238,.18));filter:blur(2px)}
+    .stat-card p{color:var(--muted);font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+    .stat-card h3{font-size:40px;margin-top:10px;letter-spacing:-.06em}
+    .stat-card small{display:block;color:var(--muted);margin-top:9px;font-weight:700}
+
+    .content-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+    .card{
+      border:1px solid var(--line);border-radius:var(--radius);
+      background:rgba(15,23,42,.70);backdrop-filter:blur(22px);
+      box-shadow:0 16px 54px rgba(0,0,0,.24);padding:20px;overflow:hidden;
+    }
+    .card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+    .card-head h3{font-size:20px;letter-spacing:-.03em}
+    .card-head p{color:var(--muted);margin-top:4px;font-size:13px;line-height:1.5}
+
+    .toolbar{display:grid;grid-template-columns:1.3fr .9fr .8fr .8fr auto;gap:10px;margin-bottom:18px}
+    .toolbar.team{grid-template-columns:1fr 1fr .8fr auto}
+    .toolbar.events{grid-template-columns:1fr .8fr 1fr auto}
+    .toolbar.two{grid-template-columns:1fr auto}
+
+    input,select,textarea{
+      width:100%;background:rgba(2,6,23,.68);border:1px solid var(--line);color:white;
+      border-radius:16px;padding:13px 14px;outline:none;font:inherit;transition:.25s ease;
+    }
+    input:focus,select:focus,textarea:focus{border-color:rgba(34,211,238,.54);box-shadow:0 0 0 4px rgba(34,211,238,.08)}
+    textarea{min-height:110px;resize:vertical}
+    option{background:#0b1020;color:white}
+
+    .kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .lane{min-height:360px;border:1px solid var(--line);background:rgba(2,6,23,.28);border-radius:26px;padding:14px;transition:.25s ease}
+    .lane.drag-over{background:rgba(34,211,238,.08);border-color:rgba(34,211,238,.36);transform:scale(1.01)}
+    .lane-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:0 2px}
+    .lane-title h4{display:flex;align-items:center;gap:8px;font-size:14px;color:#e2e8f0;text-transform:uppercase;letter-spacing:.08em}
+    .count-badge{min-width:26px;height:26px;display:grid;place-items:center;border-radius:999px;background:rgba(255,255,255,.08);font-size:12px;font-weight:900}
+    .dot{width:10px;height:10px;border-radius:999px;background:var(--cyan)}
+    .dot.progress{background:var(--yellow)}
+    .dot.done{background:var(--green)}
+
+    .task{
+      position:relative;border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border-radius:22px;padding:15px;margin-bottom:12px;cursor:grab;transition:.25s ease;overflow:hidden;
+    }
+    .task:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.22);box-shadow:0 14px 36px rgba(0,0,0,.28)}
+    .task h4{font-size:15px;line-height:1.35;margin-bottom:10px}
+    .task-meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+    .pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 9px;font-size:11px;font-weight:900;color:#ddefff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)}
+    .priority-Urgent{background:rgba(239,68,68,.16);color:#fecaca}
+    .priority-High{background:rgba(245,158,11,.16);color:#fde68a}
+    .priority-Normal{background:rgba(34,211,238,.12);color:#cffafe}
+    .task p{color:var(--muted);font-size:12px;line-height:1.55;margin-bottom:12px}
+    .task-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .empty{color:var(--muted);text-align:center;border:1px dashed rgba(255,255,255,.12);border-radius:20px;padding:26px 14px;font-size:13px;line-height:1.6}
+
+    .list{display:grid;gap:12px}
+    .list-item{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:15px;border-radius:22px;background:rgba(255,255,255,.055);border:1px solid var(--line);transition:.25s ease}
+    .list-item:hover{transform:translateY(-3px);background:rgba(255,255,255,.075)}
+    .list-item h4{font-size:15px;margin-bottom:6px}
+    .list-item p{color:var(--muted);font-size:13px;line-height:1.5}
+    .avatar{width:42px;height:42px;border-radius:16px;display:grid;place-items:center;font-weight:900;background:linear-gradient(135deg, rgba(34,211,238,.35), rgba(168,85,247,.35));border:1px solid var(--line);flex:none}
+    .person-row{display:flex;gap:12px;align-items:center}
+
+    table{width:100%;border-collapse:collapse;overflow:hidden;border-radius:20px}
+    th,td{text-align:left;padding:15px 12px;border-bottom:1px solid var(--line);color:#e2e8f0;font-size:13px;vertical-align:middle}
+    th{color:#cffafe;text-transform:uppercase;letter-spacing:.08em;font-size:11px}
+
+    .progress-wrap{height:10px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin-top:12px}
+    .progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));border-radius:999px;transition:.5s ease}
+
+    .login{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 22% 18%, rgba(34,211,238,.22), transparent 34%),radial-gradient(circle at 74% 26%, rgba(168,85,247,.24), transparent 34%),rgba(2,6,23,.94);z-index:100;padding:20px;backdrop-filter:blur(20px)}
+    .login-card{width:min(460px,100%);border-radius:36px;border:1px solid var(--line);background:rgba(15,23,42,.78);box-shadow:var(--shadow);backdrop-filter:blur(28px);padding:30px;text-align:center;animation:loginPop .5s ease both}
+    @keyframes loginPop{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
+    .login-card .logo{margin:0 auto 16px;width:70px;height:70px;border-radius:24px}
+    .login-card h2{font-size:34px;letter-spacing:-.055em}
+    .login-card p{color:var(--muted);line-height:1.7;margin:12px 0 20px}
+    .login-card input{text-align:center;font-weight:900;font-size:18px;letter-spacing:.12em}
     .hidden{display:none!important}
-    @media(max-width:900px){.stats,.kanban,.two-col,.form{grid-template-columns:1fr}header{flex-direction:column;align-items:flex-start}}
+
+    .modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,.72);backdrop-filter:blur(18px);padding:20px}
+    .modal.active{display:flex}
+    .modal-card{width:min(720px,100%);border-radius:32px;background:rgba(15,23,42,.92);border:1px solid var(--line);box-shadow:var(--shadow);padding:24px;animation:loginPop .35s ease both}
+    .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+    .modal-grid .full{grid-column:1/-1}
+
+    .toast{position:fixed;right:20px;bottom:20px;z-index:120;display:grid;gap:10px}
+    .toast-msg{background:rgba(15,23,42,.9);border:1px solid var(--line);border-left:4px solid var(--cyan);border-radius:18px;padding:14px 16px;box-shadow:0 14px 38px rgba(0,0,0,.28);animation:toastIn .3s ease both;font-size:13px;color:#e2e8f0}
+    @keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+
+    .section-spacer{height:18px}
+    .small-muted{font-size:12px;color:var(--muted);line-height:1.5}
+    .right-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .status-chip{font-size:12px;font-weight:900;border-radius:999px;padding:7px 10px;background:rgba(255,255,255,.08);display:inline-flex}
+    .status-chip.Active{color:#bbf7d0;background:rgba(34,197,94,.14)}
+    .status-chip.Pending{color:#fde68a;background:rgba(245,158,11,.14)}
+    .status-chip.NeedsFollowup{color:#fecaca;background:rgba(239,68,68,.14)}
+
+    @media(max-width:1120px){
+      .app{grid-template-columns:1fr}
+      .sidebar{position:fixed;left:14px;top:14px;height:calc(100vh - 28px);width:min(310px,calc(100vw - 28px));z-index:70;transform:translateX(-115%);transition:.32s ease}
+      .sidebar.open{transform:translateX(0)}
+      .mobile-menu{display:grid;place-items:center}
+      .topbar{position:sticky;top:0;z-index:50;background:linear-gradient(to bottom,rgba(7,10,19,.95),rgba(7,10,19,.72),transparent);backdrop-filter:blur(14px)}
+      .hero-content{grid-template-columns:1fr}
+      .quick-actions{justify-content:flex-start}
+    }
+    @media(max-width:880px){
+      .stats-grid,.content-grid,.kanban{grid-template-columns:1fr}
+      .toolbar,.toolbar.team,.toolbar.events,.toolbar.two,.modal-grid{grid-template-columns:1fr}
+      .modal-grid .full{grid-column:auto}
+      .hero{padding:22px;border-radius:30px}
+      .hero h2{font-size:42px}
+      .list-item{flex-direction:column}
+      .right-actions{justify-content:flex-start}
+      table{display:block;overflow-x:auto;white-space:nowrap}
+    }
   </style>
 </head>
 
 <body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
   <div id="loginScreen" class="login">
-    <div class="login-box">
+    <div class="login-card">
+      <div class="logo" aria-hidden="true">
+        <svg width="44" height="44" viewBox="0 0 64 64" fill="none">
+          <path d="M12 15C22 4 42 4 52 15C63 27 58 48 32 58C6 48 1 27 12 15Z" fill="rgba(255,255,255,.18)"/>
+          <path d="M19 22L32 41L45 22" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M18 43H46" stroke="white" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+      </div>
       <h2>Youth Central</h2>
-      <p>Enter the team access code to continue.</p>
-      <input id="accessCode" placeholder="Access code" type="password">
-      <br><br>
+      <p>Core team command center. Enter the access code to manage tasks, events, attendance and updates.</p>
+      <input id="accessCode" type="password" placeholder="Access code" autocomplete="off" />
+      <div style="height:12px"></div>
       <button onclick="checkAccess()">Enter Dashboard</button>
-      <p style="margin-top:14px;font-size:13px;">Default code: <b>core123</b></p>
+      <p class="small-muted">Current code: <b>core123</b></p>
     </div>
   </div>
 
   <div class="app">
-    <header>
+    <aside id="sidebar" class="sidebar">
       <div class="brand">
-        <h1>Youth Central</h1>
-        <p>Live task, team, event and announcement hub for the core team.</p>
-      </div>
-      <div class="badge">● Live Sync</div>
-    </header>
-
-    <div class="tabs">
-      <button class="tab-btn active" onclick="openTab('dashboard', this)">Dashboard</button>
-      <button class="tab-btn" onclick="openTab('tasks', this)">Tasks</button>
-      <button class="tab-btn" onclick="openTab('team', this)">Team</button>
-      <button class="tab-btn" onclick="openTab('events', this)">Events</button>
-      <button class="tab-btn" onclick="openTab('announcements', this)">Announcements</button>
-    </div>
-
-    <section id="dashboard" class="tab active">
-      <div class="grid stats">
-        <div class="card stat"><h2 id="totalTasks">0</h2><p>Total Tasks</p></div>
-        <div class="card stat"><h2 id="progressCount">0</h2><p>In Progress</p></div>
-        <div class="card stat"><h2 id="doneTasks">0</h2><p>Completed</p></div>
-        <div class="card stat"><h2 id="teamCount">0</h2><p>Team Members</p></div>
-      </div>
-      <div class="two-col">
-        <div class="card"><h2>Upcoming Events</h2><br><div id="dashboardEvents"></div></div>
-        <div class="card"><h2>Team Leaderboard</h2><br><div id="leaderboard"></div></div>
-      </div>
-    </section>
-
-    <section id="tasks" class="tab">
-      <div class="card">
-        <div class="section-title"><div><h2>Task Board</h2><p>Everyone sees updates live.</p></div></div>
-        <div class="form">
-          <input id="taskTitle" placeholder="Task name">
-          <select id="taskOwner"></select>
-          <input id="taskDue" type="date">
-          <select id="taskPriority"><option>Normal</option><option>High</option><option>Urgent</option></select>
-          <button onclick="addTask()">Add</button>
+        <div class="logo" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 64 64" fill="none">
+            <path d="M12 15C22 4 42 4 52 15C63 27 58 48 32 58C6 48 1 27 12 15Z" fill="rgba(255,255,255,.18)"/>
+            <path d="M19 22L32 41L45 22" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M18 43H46" stroke="white" stroke-width="6" stroke-linecap="round"/>
+          </svg>
         </div>
+        <div><h1>Youth Central</h1><p>Core Team Hub</p></div>
+      </div>
 
-        <div class="kanban">
-          <div class="card column"><h3>To Do</h3><div id="todoTasks"></div></div>
-          <div class="card column"><h3>In Progress</h3><div id="progressTasks"></div></div>
-          <div class="card column"><h3>Completed</h3><div id="completedTasks"></div></div>
+      <nav class="nav">
+        <button class="nav-btn active" onclick="openPage('dashboard', this)"><span class="nav-icon">⌂</span> Dashboard</button>
+        <button class="nav-btn" onclick="openPage('tasks', this)"><span class="nav-icon">✓</span> Tasks</button>
+        <button class="nav-btn" onclick="openPage('team', this)"><span class="nav-icon">👥</span> Team</button>
+        <button class="nav-btn" onclick="openPage('events', this)"><span class="nav-icon">📅</span> Events</button>
+        <button class="nav-btn" onclick="openPage('attendance', this)"><span class="nav-icon">📍</span> Attendance</button>
+        <button class="nav-btn" onclick="openPage('announcements', this)"><span class="nav-icon">📢</span> Announcements</button>
+        <button class="nav-btn" onclick="openPage('prayer', this)"><span class="nav-icon">🙏</span> Prayer</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="live-pill"><span class="pulse"></span> Live Firebase Sync</div>
+        <p>Updates appear for everyone instantly. Built for youth leaders, events and ministry follow-up.</p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+        <p class="small-muted" id="todayLine"></p>
+        <div class="right-actions">
+          <button class="btn-ghost" onclick="openQuickTask()">+ Quick Task</button>
+          <button class="btn-ghost" onclick="logout()">Lock</button>
         </div>
       </div>
-    </section>
 
-    <section id="team" class="tab">
-      <div class="card">
-        <div class="section-title"><div><h2>Team Members</h2><p>Add your core team here.</p></div></div>
-        <div class="form" style="grid-template-columns:1fr 1fr 1fr auto;">
-          <input id="memberName" placeholder="Name">
-          <input id="memberRole" placeholder="Team / Role">
-          <select id="memberStatus"><option>Active</option><option>Pending</option><option>Needs Follow-up</option></select>
-          <button onclick="addMember()">Add</button>
+      <section class="hero">
+        <div class="hero-content">
+          <div>
+            <div class="eyebrow"><span class="pulse"></span> Youth Command Center</div>
+            <h2>Move together. <span>Lead better.</span></h2>
+            <p>A live task management space for the core team — assignments, events, attendance, announcements and prayer requests in one beautiful dashboard.</p>
+          </div>
+          <div class="quick-actions">
+            <button onclick="openQuickTask()">Add Task</button>
+            <button class="btn-purple" onclick="openPageByName('events')">Plan Event</button>
+            <button class="btn-ghost" onclick="openPageByName('attendance')">Mark Attendance</button>
+          </div>
         </div>
-        <table>
-          <thead><tr><th>Name</th><th>Role</th><th>Status</th><th>Completed</th><th>Action</th></tr></thead>
-          <tbody id="memberTable"></tbody>
-        </table>
-      </div>
-    </section>
+      </section>
 
-    <section id="events" class="tab">
-      <div class="card">
-        <div class="section-title"><div><h2>Events</h2><p>Plan youth events and responsibilities.</p></div></div>
-        <div class="form" style="grid-template-columns:1fr 1fr 1fr auto;">
-          <input id="eventTitle" placeholder="Event name">
-          <input id="eventDate" type="date">
-          <input id="eventOwner" placeholder="Person in charge">
-          <button onclick="addEvent()">Add</button>
+      <section id="dashboard" class="page active">
+        <div class="stats-grid">
+          <div class="stat-card" style="--glow:rgba(34,211,238,.2)"><p>Total Tasks</p><h3 id="totalTasks">0</h3><small>All work items</small></div>
+          <div class="stat-card" style="--glow:rgba(245,158,11,.2)"><p>In Progress</p><h3 id="progressCount">0</h3><small>Being handled now</small></div>
+          <div class="stat-card" style="--glow:rgba(34,197,94,.2)"><p>Completed</p><h3 id="doneTasks">0</h3><small>Finished work</small></div>
+          <div class="stat-card" style="--glow:rgba(168,85,247,.2)"><p>Team Members</p><h3 id="teamCount">0</h3><small>Core team</small></div>
         </div>
-        <div id="eventList"></div>
-      </div>
-    </section>
 
-    <section id="announcements" class="tab">
-      <div class="card">
-        <div class="section-title"><div><h2>Announcements</h2><p>Important team updates.</p></div></div>
-        <textarea id="announcementText" placeholder="Write announcement..."></textarea>
-        <br><br>
-        <button onclick="addAnnouncement()">Post</button>
-        <br><br>
-        <div id="announcementList"></div>
-      </div>
-    </section>
+        <div class="content-grid">
+          <div class="card">
+            <div class="card-head"><div><h3>Mission Progress</h3><p>Completion rate based on all tasks.</p></div><span class="status-chip" id="progressText">0%</span></div>
+            <div class="progress-wrap"><div id="progressBar" class="progress-bar"></div></div>
+            <div class="section-spacer"></div>
+            <div class="card-head"><div><h3>Priority Tasks</h3><p>Urgent and high priority items first.</p></div></div>
+            <div id="priorityTasks" class="list"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><div><h3>Upcoming Events</h3><p>Next activities and owners.</p></div></div>
+            <div id="dashboardEvents" class="list"></div>
+            <div class="section-spacer"></div>
+            <div class="card-head"><div><h3>Leaderboard</h3><p>Completed tasks by member.</p></div></div>
+            <div id="leaderboard" class="list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tasks" class="page">
+        <div class="card">
+          <div class="card-head"><div><h3>Live Task Board</h3><p>Drag tasks between columns or use the action buttons.</p></div><button onclick="openQuickTask()">+ Add Task</button></div>
+          <div class="kanban">
+            <div class="lane" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)" ondrop="dropTask(event,'todo')">
+              <div class="lane-title"><h4><span class="dot"></span> To Do</h4><span id="todoCount" class="count-badge">0</span></div><div id="todoTasks"></div>
+            </div>
+            <div class="lane" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)" ondrop="dropTask(event,'progress')">
+              <div class="lane-title"><h4><span class="dot progress"></span> In Progress</h4><span id="progressTaskCount" class="count-badge">0</span></div><div id="progressTasks"></div>
+            </div>
+            <div class="lane" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)" ondrop="dropTask(event,'completed')">
+              <div class="lane-title"><h4><span class="dot done"></span> Completed</h4><span id="completedTaskCount" class="count-badge">0</span></div><div id="completedTasks"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="team" class="page">
+        <div class="card">
+          <div class="card-head"><div><h3>Core Team</h3><p>Add members, roles and track task contribution.</p></div></div>
+          <div class="toolbar team">
+            <input id="memberName" placeholder="Member name">
+            <input id="memberRole" placeholder="Team / Role">
+            <select id="memberStatus"><option>Active</option><option>Pending</option><option>Needs Follow-up</option></select>
+            <button onclick="addMember()">Add Member</button>
+          </div>
+          <table><thead><tr><th>Member</th><th>Role</th><th>Status</th><th>Tasks</th><th>Action</th></tr></thead><tbody id="memberTable"></tbody></table>
+        </div>
+      </section>
+
+      <section id="events" class="page">
+        <div class="card">
+          <div class="card-head"><div><h3>Event Planner</h3><p>Plan tournaments, meetings, services and team responsibilities.</p></div></div>
+          <div class="toolbar events">
+            <input id="eventTitle" placeholder="Event name">
+            <input id="eventDate" type="date">
+            <input id="eventOwner" placeholder="Person in charge">
+            <button onclick="addEvent()">Add Event</button>
+          </div>
+          <div id="eventList" class="list"></div>
+        </div>
+      </section>
+
+      <section id="attendance" class="page">
+        <div class="card">
+          <div class="card-head"><div><h3>Attendance Tracker</h3><p>Mark attendance for meetings, practices and events.</p></div></div>
+          <div class="toolbar events">
+            <input id="attendanceDate" type="date">
+            <select id="attendanceMember"></select>
+            <select id="attendanceStatus"><option>Present</option><option>Late</option><option>Absent</option></select>
+            <button onclick="addAttendance()">Mark</button>
+          </div>
+          <div id="attendanceList" class="list"></div>
+        </div>
+      </section>
+
+      <section id="announcements" class="page">
+        <div class="card">
+          <div class="card-head"><div><h3>Announcements</h3><p>Keep important updates clear for the whole team.</p></div></div>
+          <div class="toolbar two"><textarea id="announcementText" placeholder="Write an announcement for the team..."></textarea><button onclick="addAnnouncement()">Post</button></div>
+          <div id="announcementList" class="list"></div>
+        </div>
+      </section>
+
+      <section id="prayer" class="page">
+        <div class="card">
+          <div class="card-head"><div><h3>Prayer Requests</h3><p>A simple board for things the core team should pray for.</p></div></div>
+          <div class="toolbar two"><textarea id="prayerText" placeholder="Add prayer request..."></textarea><button onclick="addPrayer()">Add</button></div>
+          <div id="prayerList" class="list"></div>
+        </div>
+      </section>
+    </main>
   </div>
+
+  <div id="taskModal" class="modal">
+    <div class="modal-card">
+      <div class="card-head"><div><h3>Add New Task</h3><p>Create a responsibility and assign it to someone.</p></div><button class="btn-ghost mini-btn" onclick="closeQuickTask()">Close</button></div>
+      <div class="modal-grid">
+        <input id="taskTitle" class="full" placeholder="Task title">
+        <select id="taskOwner"></select>
+        <input id="taskDue" type="date">
+        <select id="taskPriority"><option>Normal</option><option>High</option><option>Urgent</option></select>
+        <select id="taskCategory"><option>General</option><option>Media</option><option>Worship</option><option>Outreach</option><option>Logistics</option><option>Finance</option><option>Follow-up</option></select>
+        <textarea id="taskNotes" class="full" placeholder="Notes / details..."></textarea>
+        <button class="full" onclick="addTask()">Create Task</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, onSnapshot, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCdMfitam8d7UwVfP2I3jbuDIYvW-lAB-c",
@@ -168,218 +526,186 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    let members = [];
-    let tasks = [];
-    let events = [];
-    let announcements = [];
+    let members=[], tasks=[], events=[], announcements=[], prayers=[], attendance=[], draggedTaskId=null;
+    const TEAM_CODE="core123";
+    const $=id=>document.getElementById(id);
+    const clean=value=>String(value??"").replace(/[<>&'"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;',"'":'&#39;','"':'&quot;'}[c]));
+    $("todayLine").textContent = new Date().toLocaleDateString("en-US",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
 
-    const TEAM_CODE = "core123";
-
-    window.checkAccess = function(){
-      const code = document.getElementById("accessCode").value.trim();
-      if(code === TEAM_CODE){
-        localStorage.setItem("youthAccess","yes");
-        document.getElementById("loginScreen").classList.add("hidden");
-      } else {
-        alert("Wrong access code");
-      }
+    function notify(message){
+      const wrap=$("toast"), el=document.createElement("div");
+      el.className="toast-msg"; el.textContent=message; wrap.appendChild(el);
+      setTimeout(()=>{el.style.opacity="0";el.style.transform="translateX(20px)"},2600);
+      setTimeout(()=>el.remove(),3100);
     }
 
-    if(localStorage.getItem("youthAccess")==="yes"){
-      document.getElementById("loginScreen").classList.add("hidden");
-    }
+    window.checkAccess=function(){
+      if($("accessCode").value.trim()===TEAM_CODE){localStorage.setItem("youthAccess","yes");$("loginScreen").classList.add("hidden");notify("Welcome to Youth Central")}
+      else notify("Wrong access code");
+    };
+    if(localStorage.getItem("youthAccess")==="yes") $("loginScreen").classList.add("hidden");
+    window.logout=()=>{localStorage.removeItem("youthAccess");$("loginScreen").classList.remove("hidden");$("accessCode").value=""};
+    window.toggleSidebar=()=>$("sidebar").classList.toggle("open");
 
-    window.openTab = function(tabName, btn){
-      document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-      document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
-      document.getElementById(tabName).classList.add("active");
-      btn.classList.add("active");
-    }
+    window.openPage=function(pageId,btn){
+      document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+      document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+      $(pageId).classList.add("active");
+      if(btn) btn.classList.add("active");
+      $("sidebar").classList.remove("open");
+      window.scrollTo({top:0,behavior:"smooth"});
+    };
+    window.openPageByName=function(pageId){
+      const btn=[...document.querySelectorAll(".nav-btn")].find(b=>b.getAttribute("onclick")?.includes("'"+pageId+"'"));
+      window.openPage(pageId,btn);
+    };
+    window.openQuickTask=()=>{$("taskModal").classList.add("active");setTimeout(()=>$("taskTitle").focus(),120)};
+    window.closeQuickTask=()=>$("taskModal").classList.remove("active");
 
-    window.addMember = async function(){
-      const name = document.getElementById("memberName").value.trim();
-      const role = document.getElementById("memberRole").value.trim();
-      const status = document.getElementById("memberStatus").value;
-      if(!name || !role) return alert("Add name and role");
+    window.addMember=async function(){
+      const name=$("memberName").value.trim(), role=$("memberRole").value.trim(), status=$("memberStatus").value;
+      if(!name||!role) return notify("Add name and role");
       await addDoc(collection(db,"members"),{name,role,status,createdAt:serverTimestamp()});
-      document.getElementById("memberName").value="";
-      document.getElementById("memberRole").value="";
-    }
+      $("memberName").value="";$("memberRole").value="";notify("Member added");
+    };
+    window.deleteMember=async id=>{if(confirm("Delete this member?")){await deleteDoc(doc(db,"members",id));notify("Member deleted")}};
 
-    window.deleteMember = async function(id){
-      if(confirm("Delete this member?")) await deleteDoc(doc(db,"members",id));
-    }
+    window.addTask=async function(){
+      const title=$("taskTitle").value.trim(), owner=$("taskOwner").value||"", due=$("taskDue").value||"", priority=$("taskPriority").value, category=$("taskCategory").value, notes=$("taskNotes").value.trim();
+      if(!title) return notify("Add task title");
+      await addDoc(collection(db,"tasks"),{title,owner,due,priority,category,notes,status:"todo",createdAt:serverTimestamp()});
+      $("taskTitle").value="";$("taskDue").value="";$("taskNotes").value="";closeQuickTask();notify("Task created");
+    };
+    window.moveTask=async(id,status)=>{await updateDoc(doc(db,"tasks",id),{status});notify("Task moved")};
+    window.deleteTask=async id=>{if(confirm("Delete this task?")){await deleteDoc(doc(db,"tasks",id));notify("Task deleted")}};
 
-    window.addTask = async function(){
-      const title = document.getElementById("taskTitle").value.trim();
-      const owner = document.getElementById("taskOwner").value;
-      const due = document.getElementById("taskDue").value;
-      const priority = document.getElementById("taskPriority").value;
-      if(!title) return alert("Add task name");
-      await addDoc(collection(db,"tasks"),{title,owner,due,priority,status:"todo",createdAt:serverTimestamp()});
-      document.getElementById("taskTitle").value="";
-      document.getElementById("taskDue").value="";
-    }
+    window.dragTask=(event,id)=>{draggedTaskId=id;event.dataTransfer.effectAllowed="move"};
+    window.allowDrop=event=>{event.preventDefault();event.currentTarget.classList.add("drag-over")};
+    window.leaveDrop=event=>event.currentTarget.classList.remove("drag-over");
+    window.dropTask=async function(event,status){
+      event.preventDefault();event.currentTarget.classList.remove("drag-over");
+      if(draggedTaskId){await updateDoc(doc(db,"tasks",draggedTaskId),{status});draggedTaskId=null;notify("Task updated")}
+    };
 
-    window.moveTask = async function(id,status){
-      await updateDoc(doc(db,"tasks",id),{status});
-    }
-
-    window.deleteTask = async function(id){
-      if(confirm("Delete this task?")) await deleteDoc(doc(db,"tasks",id));
-    }
-
-    window.addEvent = async function(){
-      const title = document.getElementById("eventTitle").value.trim();
-      const date = document.getElementById("eventDate").value;
-      const owner = document.getElementById("eventOwner").value.trim();
-      if(!title || !date || !owner) return alert("Fill all event details");
+    window.addEvent=async function(){
+      const title=$("eventTitle").value.trim(), date=$("eventDate").value, owner=$("eventOwner").value.trim();
+      if(!title||!date||!owner) return notify("Fill all event details");
       await addDoc(collection(db,"events"),{title,date,owner,createdAt:serverTimestamp()});
-      document.getElementById("eventTitle").value="";
-      document.getElementById("eventDate").value="";
-      document.getElementById("eventOwner").value="";
-    }
+      $("eventTitle").value="";$("eventDate").value="";$("eventOwner").value="";notify("Event added");
+    };
+    window.deleteEvent=async id=>{if(confirm("Delete this event?")){await deleteDoc(doc(db,"events",id));notify("Event deleted")}};
 
-    window.deleteEvent = async function(id){
-      if(confirm("Delete this event?")) await deleteDoc(doc(db,"events",id));
-    }
-
-    window.addAnnouncement = async function(){
-      const text = document.getElementById("announcementText").value.trim();
-      if(!text) return alert("Write announcement");
+    window.addAnnouncement=async function(){
+      const text=$("announcementText").value.trim();
+      if(!text) return notify("Write an announcement");
       await addDoc(collection(db,"announcements"),{text,createdAt:serverTimestamp()});
-      document.getElementById("announcementText").value="";
-    }
+      $("announcementText").value="";notify("Announcement posted");
+    };
+    window.deleteAnnouncement=async id=>{if(confirm("Delete this announcement?")){await deleteDoc(doc(db,"announcements",id));notify("Announcement deleted")}};
 
-    window.deleteAnnouncement = async function(id){
-      if(confirm("Delete this announcement?")) await deleteDoc(doc(db,"announcements",id));
-    }
+    window.addPrayer=async function(){
+      const text=$("prayerText").value.trim();
+      if(!text) return notify("Write prayer request");
+      await addDoc(collection(db,"prayers"),{text,createdAt:serverTimestamp()});
+      $("prayerText").value="";notify("Prayer request added");
+    };
+    window.deletePrayer=async id=>{if(confirm("Delete this prayer request?")){await deleteDoc(doc(db,"prayers",id));notify("Prayer request deleted")}};
+
+    window.addAttendance=async function(){
+      const date=$("attendanceDate").value, member=$("attendanceMember").value, status=$("attendanceStatus").value;
+      if(!date||!member) return notify("Select date and member");
+      await addDoc(collection(db,"attendance"),{date,member,status,createdAt:serverTimestamp()});
+      notify("Attendance marked");
+    };
+    window.deleteAttendance=async id=>{if(confirm("Delete this attendance record?")){await deleteDoc(doc(db,"attendance",id));notify("Attendance deleted")}};
+
+    function initials(name){return clean(name).split(" ").map(n=>n[0]).join("").slice(0,2).toUpperCase()}
+    function priorityWeight(priority){return {Urgent:3,High:2,Normal:1}[priority]||0}
+    function statusClass(status){return String(status||"").replace(/\s|\-/g,"")}
 
     function render(){
-      renderMembers();
-      renderTasks();
-      renderEvents();
-      renderAnnouncements();
-      renderDashboard();
+      renderSelectors();renderDashboard();renderTasks();renderMembers();renderEvents();renderAnnouncements();renderPrayer();renderAttendance();
     }
 
-    function renderMembers(){
-      const table = document.getElementById("memberTable");
-      const ownerSelect = document.getElementById("taskOwner");
-      table.innerHTML="";
-      ownerSelect.innerHTML="";
-
+    function renderSelectors(){
+      $("taskOwner").innerHTML=`<option value="">Unassigned</option>`;
+      $("attendanceMember").innerHTML=`<option value="">Select member</option>`;
       members.forEach(m=>{
-        const completed = tasks.filter(t=>t.owner===m.name && t.status==="completed").length;
-        ownerSelect.innerHTML += `<option>${m.name}</option>`;
-        table.innerHTML += `
-          <tr>
-            <td>${m.name}</td>
-            <td>${m.role}</td>
-            <td>${m.status}</td>
-            <td>${completed}</td>
-            <td><button class="danger" onclick="deleteMember('${m.id}')">Delete</button></td>
-          </tr>`;
-      });
-    }
-
-    function renderTasks(){
-      const cols = {
-        todo:document.getElementById("todoTasks"),
-        progress:document.getElementById("progressTasks"),
-        completed:document.getElementById("completedTasks")
-      };
-      Object.values(cols).forEach(c=>c.innerHTML="");
-
-      tasks.forEach(t=>{
-        const html = `
-          <div class="task">
-            <h4>${t.title}</h4>
-            <p>Owner: <b>${t.owner || "Unassigned"}</b></p>
-            <p>Due: ${t.due || "No date"}</p>
-            <span class="pill">${t.priority}</span>
-            <span class="pill">${t.status}</span>
-            <div class="task-actions">
-              <button onclick="moveTask('${t.id}','todo')">To Do</button>
-              <button class="warning" onclick="moveTask('${t.id}','progress')">Progress</button>
-              <button class="success" onclick="moveTask('${t.id}','completed')">Done</button>
-              <button class="danger" onclick="deleteTask('${t.id}')">Delete</button>
-            </div>
-          </div>`;
-        cols[t.status || "todo"].innerHTML += html;
-      });
-    }
-
-    function renderEvents(){
-      const list = document.getElementById("eventList");
-      const dash = document.getElementById("dashboardEvents");
-      list.innerHTML="";
-      dash.innerHTML="";
-
-      events.forEach((e,i)=>{
-        const html = `
-          <div class="item">
-            <h4>${e.title}</h4>
-            <p>Date: ${e.date}</p>
-            <p>Owner: ${e.owner}</p>
-            <button class="danger" onclick="deleteEvent('${e.id}')">Delete</button>
-          </div>`;
-        list.innerHTML += html;
-
-        if(i<3){
-          dash.innerHTML += `<div class="item"><h4>${e.title}</h4><p>${e.date}</p><p>${e.owner}</p></div>`;
-        }
-      });
-    }
-
-    function renderAnnouncements(){
-      const list = document.getElementById("announcementList");
-      list.innerHTML="";
-      announcements.forEach(a=>{
-        list.innerHTML += `
-          <div class="item">
-            <h4>Announcement</h4>
-            <p>${a.text}</p>
-            <button class="danger" onclick="deleteAnnouncement('${a.id}')">Delete</button>
-          </div>`;
+        $("taskOwner").innerHTML+=`<option value="${clean(m.name)}">${clean(m.name)}</option>`;
+        $("attendanceMember").innerHTML+=`<option value="${clean(m.name)}">${clean(m.name)}</option>`;
       });
     }
 
     function renderDashboard(){
-      document.getElementById("totalTasks").innerText = tasks.length;
-      document.getElementById("progressCount").innerText = tasks.filter(t=>t.status==="progress").length;
-      document.getElementById("doneTasks").innerText = tasks.filter(t=>t.status==="completed").length;
-      document.getElementById("teamCount").innerText = members.length;
+      const done=tasks.filter(t=>t.status==="completed").length;
+      const progress=tasks.filter(t=>t.status==="progress").length;
+      const percent=tasks.length?Math.round(done/tasks.length*100):0;
+      $("totalTasks").textContent=tasks.length;$("progressCount").textContent=progress;$("doneTasks").textContent=done;$("teamCount").textContent=members.length;
+      $("progressText").textContent=percent+"%";$("progressBar").style.width=percent+"%";
 
-      const board = document.getElementById("leaderboard");
-      board.innerHTML="";
-      members.map(m=>({
-        ...m,
-        score:tasks.filter(t=>t.owner===m.name && t.status==="completed").length
-      })).sort((a,b)=>b.score-a.score).forEach(m=>{
-        board.innerHTML += `<div class="item"><h4>${m.name}</h4><p>${m.role} • ${m.score} completed tasks</p></div>`;
-      });
+      const priorityTasks=tasks.filter(t=>t.status!=="completed").sort((a,b)=>priorityWeight(b.priority)-priorityWeight(a.priority)).slice(0,5);
+      $("priorityTasks").innerHTML=priorityTasks.length?priorityTasks.map(t=>`<div class="list-item"><div><h4>${clean(t.title)}</h4><p>${clean(t.owner||"Unassigned")} • Due ${clean(t.due||"No date")}</p></div><span class="pill priority-${clean(t.priority)}">${clean(t.priority)}</span></div>`).join(""):`<div class="empty">No priority tasks yet. Add a task and assign it to someone.</div>`;
+
+      const upcoming=[...events].sort((a,b)=>String(a.date).localeCompare(String(b.date))).slice(0,4);
+      $("dashboardEvents").innerHTML=upcoming.length?upcoming.map(e=>`<div class="list-item"><div><h4>${clean(e.title)}</h4><p>${clean(e.date)} • ${clean(e.owner)}</p></div></div>`).join(""):`<div class="empty">No upcoming events added yet.</div>`;
+
+      const scores=members.map(m=>({...m,score:tasks.filter(t=>t.owner===m.name&&t.status==="completed").length})).sort((a,b)=>b.score-a.score).slice(0,5);
+      $("leaderboard").innerHTML=scores.length?scores.map((m,i)=>`<div class="list-item"><div class="person-row"><div class="avatar">${i+1}</div><div><h4>${clean(m.name)}</h4><p>${clean(m.role)} • ${m.score} completed</p></div></div></div>`).join(""):`<div class="empty">Add team members to start the leaderboard.</div>`;
     }
 
-    onSnapshot(collection(db,"members"), snap=>{
-      members = snap.docs.map(d=>({id:d.id,...d.data()}));
-      render();
-    });
+    function taskCard(t){
+      return `<div class="task" draggable="true" ondragstart="dragTask(event,'${t.id}')">
+        <h4>${clean(t.title)}</h4>
+        <div class="task-meta"><span class="pill">${clean(t.owner||"Unassigned")}</span><span class="pill priority-${clean(t.priority)}">${clean(t.priority||"Normal")}</span><span class="pill">${clean(t.category||"General")}</span></div>
+        <p>${clean(t.notes||"No extra notes")}</p><p>Due: <b>${clean(t.due||"No date")}</b></p>
+        <div class="task-actions"><button class="mini-btn btn-ghost" onclick="moveTask('${t.id}','todo')">To Do</button><button class="mini-btn btn-yellow" onclick="moveTask('${t.id}','progress')">Progress</button><button class="mini-btn btn-green" onclick="moveTask('${t.id}','completed')">Done</button><button class="mini-btn btn-danger" onclick="deleteTask('${t.id}')">Delete</button></div>
+      </div>`;
+    }
 
-    onSnapshot(collection(db,"tasks"), snap=>{
-      tasks = snap.docs.map(d=>({id:d.id,...d.data()}));
-      render();
-    });
+    function renderTasks(){
+      const todo=tasks.filter(t=>t.status==="todo"), progress=tasks.filter(t=>t.status==="progress"), completed=tasks.filter(t=>t.status==="completed");
+      $("todoCount").textContent=todo.length;$("progressTaskCount").textContent=progress.length;$("completedTaskCount").textContent=completed.length;
+      $("todoTasks").innerHTML=todo.length?todo.map(taskCard).join(""):`<div class="empty">Drop new tasks here.</div>`;
+      $("progressTasks").innerHTML=progress.length?progress.map(taskCard).join(""):`<div class="empty">Move tasks here when someone starts.</div>`;
+      $("completedTasks").innerHTML=completed.length?completed.map(taskCard).join(""):`<div class="empty">Finished tasks will appear here.</div>`;
+    }
 
-    onSnapshot(collection(db,"events"), snap=>{
-      events = snap.docs.map(d=>({id:d.id,...d.data()}));
-      render();
-    });
+    function renderMembers(){
+      $("memberTable").innerHTML=members.length?members.map(m=>{
+        const assigned=tasks.filter(t=>t.owner===m.name).length, completed=tasks.filter(t=>t.owner===m.name&&t.status==="completed").length;
+        return `<tr><td><div class="person-row"><div class="avatar">${initials(m.name)}</div><b>${clean(m.name)}</b></div></td><td>${clean(m.role)}</td><td><span class="status-chip ${statusClass(m.status)}">${clean(m.status)}</span></td><td>${completed}/${assigned}</td><td><button class="mini-btn btn-danger" onclick="deleteMember('${m.id}')">Delete</button></td></tr>`;
+      }).join(""):`<tr><td colspan="5">No team members yet.</td></tr>`;
+    }
 
-    onSnapshot(collection(db,"announcements"), snap=>{
-      announcements = snap.docs.map(d=>({id:d.id,...d.data()}));
-      render();
-    });
+    function renderEvents(){
+      const sorted=[...events].sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+      $("eventList").innerHTML=sorted.length?sorted.map(e=>`<div class="list-item"><div><h4>${clean(e.title)}</h4><p>Date: ${clean(e.date)} • Owner: ${clean(e.owner)}</p></div><button class="mini-btn btn-danger" onclick="deleteEvent('${e.id}')">Delete</button></div>`).join(""):`<div class="empty">No events yet. Add your next youth event.</div>`;
+    }
+
+    function renderAnnouncements(){
+      $("announcementList").innerHTML=announcements.length?announcements.map(a=>`<div class="list-item"><div><h4>Announcement</h4><p>${clean(a.text)}</p></div><button class="mini-btn btn-danger" onclick="deleteAnnouncement('${a.id}')">Delete</button></div>`).join(""):`<div class="empty">No announcements yet.</div>`;
+    }
+
+    function renderPrayer(){
+      $("prayerList").innerHTML=prayers.length?prayers.map(p=>`<div class="list-item"><div><h4>Prayer Request</h4><p>${clean(p.text)}</p></div><button class="mini-btn btn-danger" onclick="deletePrayer('${p.id}')">Delete</button></div>`).join(""):`<div class="empty">No prayer requests yet.</div>`;
+    }
+
+    function renderAttendance(){
+      const sorted=[...attendance].sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+      $("attendanceList").innerHTML=sorted.length?sorted.map(a=>`<div class="list-item"><div><h4>${clean(a.member)}</h4><p>${clean(a.date)} • ${clean(a.status)}</p></div><button class="mini-btn btn-danger" onclick="deleteAttendance('${a.id}')">Delete</button></div>`).join(""):`<div class="empty">No attendance records yet.</div>`;
+    }
+
+    function listen(name,assign){
+      const q=query(collection(db,name),orderBy("createdAt","desc"));
+      onSnapshot(q,snap=>{assign(snap.docs.map(d=>({id:d.id,...d.data()})));render()},err=>{console.error(err);notify("Firestore issue. Check rules or indexes.")});
+    }
+
+    listen("members",data=>members=data);
+    listen("tasks",data=>tasks=data);
+    listen("events",data=>events=data);
+    listen("announcements",data=>announcements=data);
+    listen("prayers",data=>prayers=data);
+    listen("attendance",data=>attendance=data);
   </script>
 </body>
 </html>
